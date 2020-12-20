@@ -38,6 +38,7 @@ def create_token_file(token_file):
     return storage
 
 def createFolder(folderName):
+    drive_service = build('drive', 'v2', http=http)
     body = {
         'name': folderName,
         'mimeType': "application/vnd.google-apps.folder"
