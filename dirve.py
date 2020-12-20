@@ -22,7 +22,6 @@ def file_ops(file_path):
     file_name = file_path.split('/')[-1]
     return file_name, mime_type
 
-
 def create_token_file(token_file):
     flow = OAuth2WebServerFlow(
         CLIENT_ID,
@@ -38,6 +37,13 @@ def create_token_file(token_file):
     storage.put(credentials)
     return storage
 
+def createFolder(folderName):
+    body = {
+        'name': folderName,
+        'mimeType': "application/vnd.google-apps.folder"
+    }
+    root_folder = drive_service.files().create(body = body).execute()
+    return root_folder['id']
 
 def authorize(token_file, storage):
     if storage is None:
@@ -56,6 +62,7 @@ def upload_file(file_path, file_name, mime_type):
         'title': file_name,
         'description': 'backup',
         'mimeType': mime_type,
+        'parents':[{'id':''}]
     }
     permissions = {
         'role': 'reader',
