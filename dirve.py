@@ -44,7 +44,7 @@ def createFolder(folderName):
         'name': folderName,
         'mimeType': "application/vnd.google-apps.folder"
     }
-    root_folder = drive_service.files().create(body = body).execute()
+    root_folder = drive_service.files().insert(body = body).execute()
     return root_folder['id']
 
 def authorize(token_file, storage):
