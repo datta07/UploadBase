@@ -38,6 +38,7 @@ def create_token_file(token_file):
     return storage
 
 def createFolder(folderName):
+    http = authorize("./auth_token.txt", None)
     drive_service = build('drive', 'v2', http=http)
     body = {
         'name': folderName,
