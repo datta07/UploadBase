@@ -56,15 +56,16 @@ def authorize(token_file, storage):
     return http
 
 
-def upload_file(file_path, file_name, mime_type):
+def upload_file(file_path, file_name, mime_type,folder_id=None):
     drive_service = build('drive', 'v2', http=http)
     media_body = MediaFileUpload(file_path,mimetype=mime_type,resumable=True)
     body = {
         'title': file_name,
         'description': 'backup',
-        'mimeType': mime_type,
-        'parents':[{'id':''}]
+        'mimeType': mime_type
     }
+    if folder_id:
+        body['parents']=[{'id':folder_id}]
     permissions = {
         'role': 'reader',
         'type': 'anyone',
