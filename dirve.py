@@ -80,7 +80,7 @@ def upload_file(file_path, file_name, mime_type,folder_id=None):
     return download_url
 
 http=None
-def getLink(file_path):
+def getLink(file_path,folder_id):
     global http
     try:
         with open(file_path) as f: 
@@ -94,10 +94,9 @@ def getLink(file_path):
         http = authorize(token_file, create_token_file(token_file))
     http = authorize("./auth_token.txt", None)
     file_name, mime_type = file_ops(file_path)
-
     try:
-        return upload_file(file_path, file_name, mime_type)
+        return upload_file(file_path, file_name, mime_type,folder_id)
     except ResumableUploadError as e:
         print("Error occured while first upload try:", e)
         print("Trying one more time.")
-        return upload_file(file_path, file_name, mime_type)
+        return upload_file(file_path, file_name, mime_type,folder_id)
