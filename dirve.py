@@ -37,13 +37,15 @@ def create_token_file(token_file):
     storage.put(credentials)
     return storage
 
-def createFolder(folderName):
+def createFolder(folderName,folder_id=None):
     http = authorize("./auth_token.txt", None)
     drive_service = build('drive', 'v3', http=http)
     body = {
         'name': folderName,
         'mimeType': "application/vnd.google-apps.folder"
     }
+    if folder_id:
+        body['parents']=[{'id':folder_id}]
     root_folder = drive_service.files().create(body = body).execute()
     return root_folder['id']
 
